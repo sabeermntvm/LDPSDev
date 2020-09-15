@@ -1,0 +1,888 @@
+    // Custom Theming for Angular Material
+    // For more information: https://material.angular.io/guide/theming
+    @import '~@angular/material/theming';
+    // Plus imports for other components in your app.
+    // Include the common styles for Angular Material. We include this here so that you only
+    // have to load a single css file for Angular Material in your app.
+    // Be sure that you only ever include this mixin once!
+    @include mat-core();
+    // Define the palettes for your theme using the Material Design palettes available in palette.scss
+    // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+    // hue. Available color palettes: https://material.io/design/color/
+    /* For use in src/lib/core/theming/_palette.scss */
+    
+    $custom-typography: mat-typography-config($font-family: '"Lato", sans-serif;');
+    @include mat-core($custom-typography);
+    $blue: ( 50: #e1edf7, 100: #b5d1ec, 200: #83b3df, 300: #5195d2, 400: #2c7ec8, 500: #0767be, 600: #065fb8, 700: #0554af, 800: #044aa7, 900: #023999, A100: #c4d5ff, A200: #91b1ff, A400: #5e8dff, A700: #457bff, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #ffffff, ));
+    $loan-default-prediction-primary: mat-palette($blue);
+    $loan-default-prediction-accent: mat-palette($blue, A200, A100, A400);
+    // The warn palette is optional (defaults to red).
+    $loan-default-prediction-warn: mat-palette($mat-red);
+    // Create the theme object (a Sass map containing all of the palettes).
+    $loan-default-prediction-theme: mat-light-theme($loan-default-prediction-primary, $loan-default-prediction-accent, $loan-default-prediction-warn);
+    // Include theme styles for core and each component used in your app.
+    // Alternatively, you can import and @include the theme mixins for each component
+    // that you are using.
+    @include angular-material-theme($loan-default-prediction-theme);
+    /* You can add global styles to this file, and also import other style files */
+    
+    @import './assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+    html,
+    body {
+        // height: 100%;
+    }
+    
+    html {
+        height: 100%;
+    }
+    
+    body {
+        margin: 0;
+        font-family: Lato, "Helvetica Neue", sans-serif;
+        font-weight: normal;
+        // background: #e7e9f6;
+        // background: linear-gradient(-135deg, #c850c0, #4158d0);
+        // background: linear-gradient(90deg, #c850c0, #4158d0);
+    }
+    
+    .btn {
+        // background: linear-gradient(-135deg, #4158d0, #8c41d0c4);
+        background-color: #0767be !important;
+        // text-transform: uppercase;
+        cursor: pointer!important;
+    }
+    
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: rgba(0, 0, 0, 0.3)!important;
+    }
+    
+    .mat-raised-button {
+        border-radius: 25px!important;
+        width: 100%;
+        box-shadow: none!important;
+    }
+    
+    .table-content {
+        //margin-top: 30px;
+        margin-bottom: 30px;
+        table.table{
+            width: 100%;
+            border-radius: 6px;
+            // overflow: hidden;
+        }
+        .stickycol:first-child {
+            // border-right: 1px solid #e0e0e0;
+          }
+        tr.mat-header-row {
+            height: 45px!important;
+        }
+        tr {
+            height: 40px!important;
+        }
+        tr {
+            height: auto;
+            th {
+                border-top: 0!important;
+                padding: 4px 12px !important;
+                vertical-align: middle!important;
+                border-right: 1px solid #e0e0e0;
+                position: sticky;
+                top: 0;
+                font-size: 15px;
+                white-space: pre;
+                background: #4c4d4f;
+                font-weight: normal;
+                color: #fff;
+                z-index: 1;
+            
+            }
+            td {
+                padding: 4px 12px !important;
+                border-right: 1px solid #e0e0e0;
+                white-space: pre;
+                font-size: 14px;
+                border-top: 0!important;
+                &:first-of-type {
+                    padding-left: 14px!important;
+                    border-right: 1px solid #e0e0e0;
+                    .btn.btn-small{
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+                &:last-of-type {
+                    // text-align: center!important;
+                }
+                &:nth-of-type(2) {
+                    // text-align: left!important;
+                }
+            }
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f5f5f5;
+            .stickycol{
+                background-color: #f5f5f5;
+            }
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+            .stickycol{
+                background-color: #ffffff;
+            }
+        }
+    }
+    
+    .table-content {
+        overflow-x: auto;
+        width: 100%;
+        padding: 0 1px;
+    }
+    /* Angular Material Overrides */
+    
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: #ccc;
+        /* Override outline color. */
+    }
+    
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: .65em 0;
+        /* Original top/bottom value was 1em. */
+    }
+    
+    .mat-input-element {
+        position: relative;
+        top: -0.2em;
+        
+        /* Adjust accordingly to keep placeholder/input text vertically centered. */
+    }
+    
+    .mat-form-field-label-wrapper {
+        top: -1.2em;
+        /* Adjust accordingly to keep <mat-label> text vertically centered. */
+    } 
+    
+    .progress-bar-wrap {
+        h2 {
+            text-align: left;
+            margin-bottom: 0;
+            font-size: 16px;
+            color: black;
+            font-weight: 600;
+            // margin-bottom: 10px;
+        }
+        margin: 20% auto 0;
+        @media (min-width:768px) {
+            width: 25%;
+        }
+     
+        >div {
+            display: block;
+            // text-align: left;
+            margin-bottom: 10px;
+        }
+        padding: 20px;
+        background: #f7f7f7;
+        border-radius:10px;
+        box-shadow:0px 0px 5px 2px #0f0f0f4a;
+    }
+    // .block-ui-wrapper.block-ui-main,.block-ui-wrapper{
+    //     z-index: 50 !important;
+    // }
+    .block-ui-wrapper{
+        // z-index: 999 !important;
+        background: rgba(0, 0, 0, 0.1)!important;
+        cursor: auto!important;
+    }
+    .block-ui-main{
+        cursor: auto!important;
+    }
+    .progress_overlay {
+        position: fixed;
+        z-index: 9999;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    
+    .mat-toolbar-row,
+    .mat-toolbar-single-row {
+        padding: 0!important;
+        position: relative;
+        background: #ffffff;
+        button {
+            background: #ffffff;
+            color: #0767be;
+            border-radius: 0;
+            height: 100%;
+            width: 56px;
+            margin-right: 0!important;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+    
+    .mat-drawer.mat-drawer-side {
+        background: #4c4d4f !important;
+    }
+    
+    app-menu-list-item {
+        &:last-child {
+            .mat-list-item {
+                &.active,
+                &:hover {
+                    // background: #fafafa!important;
+                    background-color: transparent!important;
+                }
+            }
+        }
+    }
+    
+    .mat-list-item {
+        &.active,
+        &:hover {
+            // background: #fafafa!important;
+            background-color: #f2f4f7!important;
+        }
+        // &.active {
+        //     .routeIcon {
+        //         color: #000000 !important;
+        //     }
+        // }
+    }
+    
+    .mat-drawer-side {
+        border-right: 0 !important;
+    }
+    
+    // .mat-drawer-content {
+    //     padding-top: 60px;
+    // }
+    button.mat-menu-item {
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    .mat-menu-panel {
+        min-height: 0!important;
+    }
+    
+    .mat-menu-content:not(:empty) {
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+    }
+    
+    ul.breadcrumb {
+        padding: 0;
+        list-style: none;
+        background-color: transparent!important;
+        margin-bottom: 10px;
+        margin-top: 8px;
+    }
+    
+    ul.breadcrumb li {
+        display: flex;
+        font-size: 14px;
+        align-items: center;
+        .material-icons {
+            font-size: 18px!important;
+            height: 18px;
+        }
+    }
+    
+    // ul.breadcrumb li+li:before {
+    //     padding: 8px;
+    //     color: black;
+    //     content: "/\00a0";
+    // }
+    ul.breadcrumb li a {
+        color: #0275d8;
+        text-decoration: none;
+    }
+    
+    ul.breadcrumb li a:hover {
+        color: #01447e;
+        text-decoration: underline;
+    }
+    
+    h1.title {
+        font-size: 15px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        display: none;
+    }
+    
+    .wrapper {
+        padding-left: 10px;
+        margin-bottom: 80px;
+    }
+    
+    .title-box {
+        background: #c8e4fb;
+    }
+    
+    .mat-drawer-container {
+        background-color: #f2f4f7!important;
+    }
+    
+    .mat-error {
+        display: block;
+        margin-bottom: 10px;
+    }
+    
+    .sub-menu {
+        position: absolute;
+        left: 56px;
+        width: 200px;
+        height: auto;
+        z-index: 1000;
+        top: 95px;
+        background: #4c4d4f;
+        color: #e1dddd;
+        padding: 15px 20px;
+        .mat-list-item-content {
+            background: #4c4d4f;
+            color: #fff;
+        }
+        .mat-list-item {
+            .title_name {
+                display: block!important;
+            }
+        }
+        .mat-list-item.active .routeIcon {
+            color: #ffffff !important;
+        }
+    }
+    
+    .mat-list-item {
+        .title_name {
+            display: none!important;
+        }
+    }
+    
+    .mat-drawer.mat-drawer-side {
+        overflow: visible;
+        z-index: auto!important;    width: 56px;
+    }
+    
+    //mat tabs
+    .mat-tab-link {
+        min-width: 75px!important;
+        border-right: 1px solid #e0e0e0;
+        border-top: 1px solid #e0e0e0;
+        opacity: 1!important;
+        background: transparent !important;
+        &:first-child {
+            border-left: 1px solid #e0e0e0;
+        }
+        &.mat-tab-label-active {
+            /* color: #ffffff !important; */
+            /* transform: scale(1.5); */
+            font-weight: bold;
+            /* width: 20px; */
+            font-size: 18px;
+        }
+        span.answered {
+            i.fa {
+                font-size: 16px;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                font-weight: normal;               
+                &.fa-check-circle-o {
+                    color: #068206;
+                }
+            }
+        }
+        span.pending {
+            i.fa {
+                font-size: 16px;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                font-weight: normal;
+                &.fa-question-circle-o {
+                    color: #f16d6d;
+                }               
+            }
+        }
+        
+    }
+    /* label style */
+    
+    .mat-tab-label {
+        background: #e7e7e7;
+        color: black;
+        min-width: 60px!important;
+    }
+    /* focus style */
+    
+    .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+    .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
+    .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+    .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+        background: #e7e7e7;
+    }
+    /* ink bar style */
+    
+    .mat-tab-group.mat-primary .mat-ink-bar,
+    .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+        // background: rgba(149, 165, 166, 0.3);
+        // background-color: #333333;
+    }
+    
+    .backdrop {
+        background-color: #ffffff!important;
+    }
+    button:focus{
+        outline:none!important;
+    }
+    .mat-button-toggle-checked {
+        background-color: #0767be;
+        
+    }
+    .mat-button-toggle-appearance-standard{
+        color: #0767be!important;
+    }
+    .mat-button-toggle-group-appearance-standard{
+        border-radius: 15px!important;
+    }
+    .mat-button-toggle-checked.mat-button-toggle-appearance-standard{
+        color: #ffffff!important;
+        
+    }
+    .mat-button-toggle-appearance-standard{
+        .mat-icon{
+            height: 22px !important;
+            width: 22px !important;
+            font-size: 22px !important;
+        }
+      
+        // color: #4c4d4f!important;
+    }
+    .mat-button-toggle-appearance-standard .mat-button-toggle-label-content{
+        line-height: 20px!important;
+        padding: 2px 6px!important;
+    }
+    .mat-raised-button[disabled], .mat-flat-button[disabled]{
+        &:hover{
+            cursor: not-allowed!important;
+            background: gray !important;
+        }
+        background: gray !important;
+        color: rgb(232 232 232 / 85%)!important;
+    }
+    .stat-wrap{
+        display: flex!important;
+        align-items: center;
+        margin-bottom: 10px;
+        justify-content: space-between;
+        span{
+            font-size: 16px;
+    font-weight: 700;
+        }
+    }
+
+    /* Let's get this party started */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; 
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background:lightgray; 
+    // box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background:transparent; 
+}
+.mat-icon-button[disabled][disabled]{
+    color: rgba(0, 0, 0, 0.26)!important;
+}
+.mat-paginator-range-actions button.mat-icon-button.mat-button-base {
+    height: 30px !important;
+    width: 30px !important;
+    background: none!important;
+    border: 1px solid black !important;
+    border-radius: 0 !important;
+    line-height: normal;
+    color: black;
+ 
+    &.mat-paginator-navigation-previous {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-right: 0!important;
+    }
+    &.mat-paginator-navigation-next {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+mat-paginator .mat-form-field-appearance-legacy .mat-form-field-infix {
+    // padding: 5px!important;
+    border: 1px solid black !important;
+}
+.mat-select-value {
+    // color: black;
+    font-size: 14px;
+}
+.mat-paginator-page-size-select {
+    width: 56px;
+    height: 22px;
+    line-height: normal;
+}
+.mat-select-arrow{
+    color: black;
+}
+mat-paginator {
+    margin-top: 10px;
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+        color: black;
+        font-size: 14px;
+    }
+    .mat-form-field-infix {
+        border-top: 0;
+    }
+    .mat-paginator-page-size-select {
+        margin: 0!important;
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-infix {
+        padding: 5px;
+        border: 1px solid #dee2e6;
+    }
+    .mat-form-field-wrapper {
+        padding-bottom: 0!important;
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+        display: none;
+    }
+    .mat-select {
+        height: auto!important;
+        padding-top: 0 !important;
+    }
+}
+.mat-paginator-container {
+    min-height: auto !important;
+    padding: 0px 0 !important;
+    margin-top: 0;
+    align-items: self-start!important;
+    @media (max-width: 767px) {
+        align-items: start!important;
+    }
+}
+.mat-paginator-icon {
+    width: 22px;
+}
+
+@media (max-width: 767px) {
+    .mat-paginator-range-actions {
+        margin-bottom: 10px;
+    }
+    .mat-paginator-page-size {
+        margin-top: 0;
+        margin-right: 0!important;
+    }
+}
+
+
+    .table-container{
+        border-bottom: 1px solid #d8d8d8;
+        overflow: scroll;
+        min-height: max-content;
+        height: max-content;
+        max-height:450px;
+    }
+
+
+  
+  
+    .disable-select {
+        user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    }
+
+    .stickycol {
+        position: sticky;
+        right: 0;
+        top: auto;
+        border-top-width: 1px;
+        margin-top: -1px;
+        border-right: 1px solid #e0e0e0;
+        &.head{
+            width: 15%;
+            z-index: 1;
+            right: 0;
+        }
+    }
+  a.btn.btn-primary{
+    span.mat-button-wrapper{
+    
+    i.fa.fa-download {
+        border-right: 1px solid #fff;
+        padding-right: 10px;
+        /* background: #c3c5c7; */
+        /* border-radius: 100%; */
+        /* padding: 4px; */
+        /* color: black; */
+    }
+    span{
+        font-size: 13px;
+    }}
+  }
+
+  .report-modal {
+    .mat-dialog-container {
+        padding: 0;
+    }
+    h1 {
+        padding: 2px 20px;
+        font-size: 18px !important;
+        background: #0767be;
+        color: #fff;
+        margin-bottom: 0;
+        position: relative;
+    }
+    h4 {
+        // background: #0e0e0e;
+        background: #dfebf7;
+        display: inline-block;
+        padding: 2px 15px;
+        border-radius: 15px;
+        // color: #ffffff;
+        span{
+            font-weight: 600;
+            // color: #ffffff;
+        }
+    }
+    .dialog-content{
+        padding: 20px 5px;
+        overflow-y:auto;
+        height: calc( 100vh - 140px ) ;
+    }
+    i.fa.fa-times-circle {
+        cursor: pointer;
+        font-size: 22px;
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        cursor: pointer;
+        transition: all ease-in 0.1s;
+    }
+  }
+.loanedit-modal{
+    .mat-dialog-container {
+        padding: 0;
+    }
+    h1 {
+        padding: 2px 20px;
+        font-size: 18px !important;
+        background: #0767be;
+        color: #fff;
+        margin-bottom: 0;
+        position: relative;
+    }
+    h4 {
+        // background: #0e0e0e;
+        background: #dfebf7;
+        display: inline-block;
+        padding: 2px 15px;
+        border-radius: 15px;
+        line-height: 25px;
+        // color: #ffffff;
+        span{
+            font-weight: 600;
+            // color: #ffffff;
+        }
+    }
+    .dialog-content{
+        .top-wrap{
+            overflow-y:auto;
+            height: calc( 100vh - 210px );
+            
+        }
+        
+        padding: 20px 5px; 
+    }
+    i.fa.fa-times-circle {
+        cursor: pointer;
+        font-size: 22px;
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        cursor: pointer;
+        transition: all ease-in 0.1s;
+    }
+}
+
+
+  .custom-forms{
+/* Angular Material Overrides */
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    // color: #ccc;
+    /* Override outline color. */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .65em 0;
+    /* Original top/bottom value was 1em. */
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    // padding-bottom: 0;
+}
+
+.mat-input-element {
+    position: relative;
+    top: 0em;
+    font-size: 14px;
+    font-weight: normal;
+    /* Adjust accordingly to keep placeholder/input text vertically centered. */
+}
+
+.mat-form-field-label-wrapper {
+    top: -1.3em;
+    /* Adjust accordingly to keep <mat-label> text vertically centered. */
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    // transform: translateY(-0.89375em) scale(0.75) !important;
+    // transform: translateY(-0.7em) scale(0.75) !important
+    transform: translateY(-0.65em) scale(0.7) !important;
+    // color: #4d95dc!important;
+    color: #0c80e9 !important;
+    
+    font-weight: 600;
+}
+.mat-select-arrow{
+    margin-top: -8px;
+}
+// .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-form-field-autofill-control:-webkit-autofill+.mat-form-field-label-wrapper .mat-form-field-label {
+//     transform: translateY(-0.59375em) scale(0.75) !important;
+// }
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+}
+.mat-form-field{
+    width: 100%;
+}
+.mat-form-field-flex {
+    border-radius: 5px;
+    padding: 0 7px;
+    border: 1px solid #efeeef;
+    align-items: center !important;
+}
+.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em!important;
+}
+.mat-form-field-appearance-legacy .mat-form-field-label {
+    text-transform: uppercase;
+}
+}
+.error-wrap {
+    border: 1px solid #f89898;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #fefbfb;
+    p{
+        color: #c04547
+    }
+    ._title{
+        font-weight: 600;
+        font-size: 16px;
+    }
+}
+p._list {
+    position: relative;
+    padding-left: 18px;
+    &:after{
+        position: absolute;
+        content: "\f111";
+        font-family: FontAwesome;
+        left: 0;
+        font-size: 8px;
+        top: 0px;
+    }
+}
+
+.sub-menu{
+    display: none;
+}
+
+.mat-list-item:hover {
+    background-color: #6b6b6b !important;
+}
+app-menu-list-item:last-child .mat-list-item.active{
+    background:#fff !important;
+}
+
+.mat-list-item.active .mat-list-item:hover{
+    background-color: transparent !important;
+}
+
+a.mat-list-item.mat-focus-indicator.ng-tns-c208-4.active:hover {
+    background: white !important;
+}
+
+.table td, 
+.table th 
+{
+    vertical-align: middle;
+}
+
+.menu-wrap span.logo {
+    display: flex;
+    width: 300px;
+    height: 100%;
+}
+span.logo.mr-4 svg
+{
+    max-width: 300px;
+    width: 300px;
+}
+
+
+button.mat-focus-indicator.mat-paginator-navigation-next.mat-icon-button.mat-button-base
+ {
+    background: #007bff !important;
+    color: #fff !important;
+    border-radius: 3px !important;
+    border: none !important;
+    margin-left: 8px;
+    box-shadow: 0 0px 12px 0 rgba(0, 0, 0, 0.034), 0 6px 8px 0 rgba(0, 0, 0, 0.034) !important;
+}
+button.mat-focus-indicator.mat-paginator-navigation-previous.mat-icon-button.mat-button-base
+ {
+    background: #007bff !important;
+    color: #fff !important;
+    border-radius: 3px !important;
+    border: none !important;
+    box-shadow: 0 0px 12px 0 rgba(0, 0, 0, 0.034), 0 6px 8px 0 rgba(0, 0, 0, 0.034) !important;
+}
+.apexcharts-toolbar {
+    display: none !important;
+}
+button.mat-focus-indicator.mat-paginator-navigation-previous.mat-icon-button.mat-button-base[disabled][disabled],
+button.mat-focus-indicator.mat-paginator-navigation-next.mat-icon-button.mat-button-base[disabled][disabled] {
+    background: #007bff76 !important;
+    color: #ffffff96 !important;
+}
+button
+{
+    cursor: pointer !important;
+}

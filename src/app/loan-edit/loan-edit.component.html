@@ -1,0 +1,430 @@
+<h1 mat-dialog-title>Loan Details<i class="fa fa-times-circle" (click)="onCloseModal()"></i></h1>
+<div class="customHeading">
+    <h4 class="mr-2 loanNumberClass flx-clm">Loan Number: <span  class="ml-2"> {{loanDetailModel.loan_sequence_number}}</span></h4>
+    <h4 class="probabilityClass flx-clm">Probability of Default: <span  class="ml-2"> {{loanDetailModel.prob_default | percent:'1.2' }}</span></h4>
+    <h4 *ngIf ="loanDetailModel.risk_category==3" class="HighRisk riskClass mr-2"><span> {{loanDetailModel.risk_type}}</span></h4>
+    <h4 *ngIf ="loanDetailModel.risk_category==2" class="MediumRisk riskClass mr-2"><span> {{loanDetailModel.risk_type}}</span></h4>
+    <h4 *ngIf ="loanDetailModel.risk_category==1" class="Lowrisk riskClass mr-2"><span> {{loanDetailModel.risk_type}}</span></h4>
+    <h4 *ngIf ="loanDetailModel.risk_category==0" class="NoRisk riskClass mr-2"><span> {{loanDetailModel.risk_type}}</span></h4>                    
+
+    <button class="btn btn-small customResolutionBtn"
+        title="Click here to start Resolution" (click)="onStartResolution(loanDetailModel)">
+        <span class="mr-2">Resolution</span>
+        <mat-icon class="circle">keyboard_arrow_right</mat-icon>                                                            
+    </button>
+
+</div>
+<div mat-dialog-content class="dialog-content custom-forms">
+    
+    <div class="container-fluid">
+       
+        <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+            
+            <div class="top-wrap">
+                <div class="col-lg-12">              
+                <div *ngIf="showError==true" class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="error-wrap">
+                            <p class="_title">Please complete all details</p>
+                            <p class="_list">Please enter the title</p>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row customGridwrap">                    
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>First Name</mat-label>
+                            <input readonly matInput  formControlName="fname"
+                                [(ngModel)]="loanDetailModel.fname">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Last Name</mat-label>
+                            <input readonly matInput  formControlName="lname"
+                                [(ngModel)]="loanDetailModel.lname">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Credit Score</mat-label>
+                            <input readonly matInput formControlName="credit_score"
+                                [(ngModel)]="loanDetailModel.credit_score">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>First Payment Date</mat-label>
+                            <input readonly matInput [matDatepicker]="fp_picker" formControlName="first_payment_date"
+                                [(ngModel)]="loanDetailModel.first_payment_date">
+                            <!-- <mat-datepicker-toggle matSuffix [for]="fp_picker"></mat-datepicker-toggle> -->
+                            <mat-datepicker #fp_picker></mat-datepicker>                            
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-lg-3" >    
+                        <mat-form-field >sS
+                            <mat-label>First Time Homebuyer Flag</mat-label>
+                            <mat-select formControlName="first_time_homebuyer_flag"
+                                [(ngModel)]="loanDetailModel.first_time_homebuyer_flag">
+                                <mat-option *ngFor="let homebuyerFlag of homebuyerFlagList" [value]="homebuyerFlag.id">
+                                    {{ homebuyerFlag.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>    
+                    </div>       -->
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>First Time Homebuyer Flag</mat-label>
+                            <input readonly matInput  formControlName="first_time_homebuyer_flagName"
+                            [(ngModel)]="first_time_homebuyer_flag_name">
+                        </mat-form-field>
+                    </div>               
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Maturity Date</mat-label>
+                            <input readonly matInput [matDatepicker]="maturity_picker" formControlName="maturity_date"
+                                [(ngModel)]="loanDetailModel.maturity_date">
+                            <!-- <mat-datepicker-toggle matSuffix [for]="maturity_picker"></mat-datepicker-toggle> -->
+                            <mat-datepicker #maturity_picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Mortgage Insurance Percentage</mat-label>
+                            <input readonly matInput 
+                                formControlName="mortgage_insurance_percentage"
+                                [(ngModel)]="loanDetailModel.mortgage_insurance_percentage">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Number of Units</mat-label>
+                            <input readonly type="number" matInput  formControlName="number_of_units"
+                                [(ngModel)]="loanDetailModel.number_of_units">
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Occupancy Status</mat-label>
+                            <mat-select formControlName="occupancy_status" [(ngModel)]="loanDetailModel.occupancy_status">
+                                <mat-option *ngFor="let occupancyStatus of occupancyStatusList"
+                                    [value]="occupancyStatus.id">{{ occupancyStatus.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Occupancy Status</mat-label>
+                            <input readonly matInput  formControlName="occupancy_statusName"
+                            [(ngModel)]="occupancy_status_name">
+                        </mat-form-field>
+                    </div>            
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original Combined Loan to Value</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="original_combined_loan_to_value"
+                                [(ngModel)]="loanDetailModel.original_combined_loan_to_value">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original Debt to Income Ratio</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="original_debt_to_income_ratio"
+                                [(ngModel)]="loanDetailModel.original_debt_to_income_ratio">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original UPB</mat-label>
+                            <input readonly type="number" matInput  formControlName="original_upb"
+                                [(ngModel)]="loanDetailModel.original_upb">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original Loan to Value</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="original_loan_to_value"
+                                [(ngModel)]="loanDetailModel.original_loan_to_value">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original Interest Rate</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="original_interest_rate"
+                                [(ngModel)]="loanDetailModel.original_interest_rate">
+                        </mat-form-field>
+                    </div>
+    
+    
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Channel</mat-label>
+                            <mat-select formControlName="channel" [(ngModel)]="loanDetailModel.channel">
+                                <mat-option *ngFor="let channel of channelList" [value]="channel.id">{{ channel.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Channel</mat-label>
+                            <input readonly matInput  formControlName="channelName"
+                            [(ngModel)]="channel_name">
+                        </mat-form-field>
+                    </div>   
+    
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>PPM Flag</mat-label>
+                            <mat-select formControlName="prepayment_penalty_mortgage_flag"
+                                [(ngModel)]="loanDetailModel.prepayment_penalty_mortgage_flag">
+                                <mat-option *ngFor="let PPMFlag of PPMFlagList" [value]="PPMFlag.id">{{ PPMFlag.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>PPM Flag</mat-label>
+                            <input readonly matInput  formControlName="prepayment_penalty_mortgage_flagName"
+                            [(ngModel)]="prepayment_penalty_mortgage_flag_name">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Property State</mat-label>
+                            <mat-select formControlName="property_state" [(ngModel)]="loanDetailModel.property_state">
+                                <mat-option *ngFor="let state of stateList" [value]="state.id">
+                                    {{ state.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Property State</mat-label>
+                            <input readonly matInput  formControlName="property_stateName"
+                            [(ngModel)]="property_state_name">
+                        </mat-form-field>
+                    </div> 
+
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Property Type</mat-label>
+                            <mat-select formControlName="property_type" [(ngModel)]="loanDetailModel.property_type">
+                                <mat-option *ngFor="let propertyType of propertyTypeList" [value]="propertyType.id">
+                                    {{ propertyType.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Property Type</mat-label>
+                            <input readonly matInput  formControlName="property_typeName"
+                            [(ngModel)]="property_type_name">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Loan Purpose</mat-label>
+                            <mat-select formControlName="loan_purpose" [(ngModel)]="loanDetailModel.loan_purpose">
+                                <mat-option *ngFor="let loanPurpose of loanPurposeList" [value]="loanPurpose.id">
+                                    {{ loanPurpose.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Loan Purpose</mat-label>
+                            <input readonly matInput  formControlName="loan_purposeName"
+                            [(ngModel)]="loan_purpose_name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Original Loan Term</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="original_loan_term" [(ngModel)]="loanDetailModel.original_loan_term">
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Number of Borrowers</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="number_of_borrowers" [(ngModel)]="loanDetailModel.number_of_borrowers">
+                        </mat-form-field>
+                    </div>
+    
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Super Conforming Flag</mat-label>
+                            <mat-select formControlName="super_conforming_flag"
+                                [(ngModel)]="loanDetailModel.super_conforming_flag">
+                                <mat-option *ngFor="let superConformingFlag of superConformingFlagList"
+                                    [value]="superConformingFlag.id">{{ superConformingFlag.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Super Conforming Flag</mat-label>
+                            <input readonly matInput  formControlName="super_conforming_flagName"
+                            [(ngModel)]="super_conforming_flag_name">
+                        </mat-form-field>
+                    </div>
+
+    
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Monthly Reporting Period</mat-label>
+                            <input readonly matInput [matDatepicker]="monthly_reporting_period_picker"
+                                formControlName="monthly_reporting_period"
+                                [(ngModel)]="loanDetailModel.monthly_reporting_period">
+                            <!-- <mat-datepicker-toggle matSuffix [for]="monthly_reporting_period_picker">
+                            </mat-datepicker-toggle> -->
+                            <mat-datepicker #monthly_reporting_period_picker></mat-datepicker>                           
+         
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Current Actual UPB</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="current_actual_upb" [(ngModel)]="loanDetailModel.current_actual_upb">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Remaining Months To Legal Maturity</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="remaining_months_to_legal_maturity"
+                                [(ngModel)]="loanDetailModel.remaining_months_to_legal_maturity">
+                        </mat-form-field>
+                    </div>
+    
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Re-purchase Flag</mat-label>
+                            <mat-select formControlName="repurchase_flag" [(ngModel)]="loanDetailModel.repurchase_flag">
+                                <mat-option *ngFor="let repurchaseFlag of repurchaseFlagList" [value]="repurchaseFlag.id">
+                                    {{ repurchaseFlag.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Re-purchase Flag</mat-label>
+                            <input readonly matInput  formControlName="repurchase_flagName"
+                            [(ngModel)]="repurchase_flag_name">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Modification Flag</mat-label>
+                            <mat-select formControlName="modification_flag" [(ngModel)]="loanDetailModel.modification_flag">
+                                <mat-option *ngFor="let modificationFlag of modificationFlagList"
+                                    [value]="modificationFlag.id">{{ modificationFlag.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Modification Flag</mat-label>
+                            <input readonly matInput  formControlName="modification_flagName"
+                            [(ngModel)]="modification_flag_name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Current Interest Rate</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="current_interest_rate" [(ngModel)]="loanDetailModel.current_interest_rate">
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Current Deferred UPB</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="current_deferred_upb" [(ngModel)]="loanDetailModel.current_deferred_upb">
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Modification Cost</mat-label>
+                            <input readonly type="number" matInput 
+                                formControlName="modification_cost" [(ngModel)]="loanDetailModel.modification_cost">
+                        </mat-form-field>
+                    </div>
+    
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Step Modification Flag</mat-label>
+                            <mat-select formControlName="step_modification_flag"
+                                [(ngModel)]="loanDetailModel.step_modification_flag">
+                                <mat-option *ngFor="let stepModificationFlag of stepModificationFlagList"
+                                    [value]="stepModificationFlag.id">{{ stepModificationFlag.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Step Modification Flag</mat-label>
+                            <input readonly matInput  formControlName="step_modification_flagName"
+                            [(ngModel)]="step_modification_flag_name">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Deferred Payment Modification Flag</mat-label>
+                            <mat-select formControlName="deferred_payment_modification"
+                                [(ngModel)]="loanDetailModel.deferred_payment_modification">
+                                <mat-option
+                                    *ngFor="let deferredPaymentModificationFlag of deferredPaymentModificationFlagList"
+                                    [value]="deferredPaymentModificationFlag.id">{{ deferredPaymentModificationFlag.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <mat-label>Deferred Payment Modification Flag</mat-label>
+                            <input readonly matInput  formControlName="deferred_payment_modificationName"
+                            [(ngModel)]="deferred_payment_modification_name">
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+            <div class="row mt-3">
+                <div class="col-lg-12  text-right">
+                    <!-- <button type="submit" class="btn mr-2 mb-2 btn-primary" mat-raised-button> Save </button>
+                    <button type="button" class="btn btn-secondary" mat-raised-button (click)="onCloseModal()" > Cancel </button> -->                    
+                </div>                
+            </div>
+        </form>
+    </div>
+</div>

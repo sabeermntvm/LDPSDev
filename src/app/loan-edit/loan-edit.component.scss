@@ -1,0 +1,258 @@
+.btn{
+    color:#fff;
+}
+.mat-raised-button {
+    width: 120px;
+}
+:host mat-select ::ng-deep .mat-select-arrow{
+    visibility: hidden;
+    // width: 0;
+    // height: 0;
+    // border-left: 5px solid transparent;
+    // border-right: 5px solid transparent;
+    // border-top: 5px solid;
+    // margin: 0 4px;
+}
+
+.HighRisk{
+    background: #ff5050;
+    color: #fff;
+}
+
+.MediumRisk{
+    background: #ffbf00 ;
+    color: #353535;
+}
+
+.Lowrisk{
+    background: #ffe950;
+    color: #353535;
+}
+
+
+.NoRisk {
+    background: #0de061;
+    color: #fff;
+}
+
+#cdk-overlay-0{
+    width: 60%;
+}
+.customHeading
+{
+    display: flex;
+    gap: 20px;
+}
+.customHeading h4
+{
+    border-radius: 4px !important;
+}
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) 
+{
+    .row.customGridwrap div {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .customHeading {
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    .customHeading * {
+        width: 100%;
+        padding: 0px !important;
+        margin: 0 !important;
+    }
+    .customHeading h4 {
+        padding: 6px 10px !important;
+    }
+    .customHeading {
+        padding: 8px 20px;
+    }
+    button.btn.btn-small.customResolutionBtn * {
+        width: max-content;
+    }
+    button.btn.btn-small.customResolutionBtn .mat-icon {
+        margin-top: 2px !important;
+    }
+}
+
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 720px) 
+{
+    .row.customGridwrap div {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .customHeading {
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    .customHeading * {
+        width: 100%;
+        padding: 0px !important;
+        margin: 0 !important;
+    }
+    .customHeading h4 {
+        padding: 6px 10px !important;
+    }
+    .customHeading {
+        padding: 8px 20px;
+    }
+    button.btn.btn-small.customResolutionBtn * {
+        width: max-content;
+    }
+    button.btn.btn-small.customResolutionBtn .mat-icon {
+        margin-top: 2px !important;
+    }
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+{
+    .row.customGridwrap > div {
+        width: 50% !important;
+        max-width: 50% !important;
+        min-width: 50% !important;
+    }
+    .customHeading h4 {
+        width: 33% !important;
+        margin-right: 0 !important;
+    }
+    .customHeading {
+        display: flex;
+        gap: 1%;
+    }
+    .customHeading {
+        padding: 8px 20px;
+    }
+    h4.mr-2.loanNumberClass.flx-clm {
+        width: 50% !important;
+        max-width: 49% !important;
+        min-width: 49% !important;
+    }
+    
+    h4.probabilityClass.flx-clm {
+        width: 50% !important;
+        max-width: 49% !important;
+        min-width: 49% !important;
+    }
+    
+    .customHeading {
+        flex-wrap: wrap;
+    }
+    
+    h4.MediumRisk.riskClass{
+        width: 49% !important;
+    }
+    
+    button.btn.btn-small.customResolutionBtn {
+        width: 49%;
+    }
+}
+@media only screen 
+and (min-width : 721px) 
+and (max-width : 1100px) 
+{
+    .row.customGridwrap > div {
+        width: 50% !important;
+        max-width: 50% !important;
+        min-width: 50% !important;
+    }
+    .customHeading h4 {
+        width: 33% !important;
+        margin-right: 0 !important;
+    }
+    .customHeading {
+        display: flex;
+        gap: 1%;
+    }
+    .flx-clm
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    .riskClass
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .flx-clm span
+    {
+        margin-left: 0 !important;
+    }
+    .customHeading {
+        padding: 8px 20px;
+    }
+    h4.mr-2.loanNumberClass.flx-clm {
+        width: 49% !important;
+        max-width: 49% !important;
+        min-width: 49% !important;
+    }
+    
+    h4.probabilityClass.flx-clm {
+        width: 50% !important;
+        max-width: 49% !important;
+        min-width: 49% !important;
+    }
+    
+    .customHeading {
+        flex-wrap: wrap;
+    }
+    
+    h4.MediumRisk.riskClass {
+        width: 49% !important;
+    }
+    
+    button.btn.btn-small.customResolutionBtn {
+        width: 49%;
+    }
+}
+@media only screen 
+and (min-width : 1101px) 
+and (max-width : 1350px) 
+{
+    .row.customGridwrap > div {
+        width: 33% !important;
+        max-width: 33% !important;
+        min-width: 33% !important;
+    }
+}
+
+button.btn.btn-small.customResolutionBtn {
+    display: flex;
+    justify-content: center;
+    outline: none;
+    border: none;
+    height: 30px;
+    padding: 2px 15px;
+    border-radius: 3px;
+    background: #007bff !important;
+    color: #fff;
+    box-shadow: 0 0px 12px 0 rgba(0, 0, 0, 0.034), 0 6px 8px 0 rgba(0, 0, 0, 0.034) !important;
+}
+.customHeading {
+    justify-content: center;
+    margin-bottom: 6px;
+    padding-top: 14px;
+    -webkit-box-shadow: 0 -38px 60px 0 rgba(0,0,0,0.02),0 2px 7px 0 rgba(0,0,0,0.1) !important;
+    box-shadow: 0 -38px 60px 0 rgba(0,0,0,0.02),0 2px 7px 0 rgba(0,0,0,0.1) !important;
+}
+.dialog-content.custom-forms {
+    padding-top: 0;
+}
+.row.customGridwrap {
+    margin-top: 20px;
+}

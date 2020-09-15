@@ -1,0 +1,285 @@
+<block-ui>
+<div class="progress_overlay" *ngIf="showProgressBar">
+    <div class="progress-bar-wrap">
+        <h2><img src="./assets/img/hourglass.gif" class="img-fluid mr-1" style="max-width: 25px;" alt="">Loading Result...</h2>
+    </div>
+</div>
+<h1 mat-dialog-title>Beacon Delinquency Management Solution – Early Resolution<i  class="fa fa-times-circle" (click)="onCloseReport()"></i></h1>
+
+<div mat-dialog-content class="dialog-content">
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="recomendedHeader">
+                <h4>
+                    <!-- <i class="fa fa-dot-circle-o mr-1" style="font-size:14px"></i> -->
+                    Loan Number: <span> {{selectedLoan.loan_sequence_number}}</span></h4>
+                    
+            </div>
+
+            <div class="flexedContainer">             
+                
+
+                <div class="questionContainer" *ngIf="!submitted">
+                    <nav mat-tab-nav-bar [backgroundColor]="background">
+                        <a mat-tab-link *ngFor="let question of questionArrayList;let i=index;" (click)="onSelectedQuestion(question,i)" 
+                        [active]="question.curr_index==selectedQuestion.curr_index"> 
+                        <span class="titles">{{qstnPrefix}}{{question.curr_index+1}}</span> 
+                        <!-- <span class="answered" title="Answered">
+                            <i *ngIf="(question.evaluation==null)" class="fa fa-question-circle-o" aria-hidden="true"></i> 
+                            <i *ngIf="(question.evaluation!=null)" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        </span>         -->
+                        <span *ngIf="(question.evaluation!=null)" class="answered" title="Answered">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        </span> 
+                        <span *ngIf="(question.evaluation==null)"  class="pending" title="Pendig">
+                            <i class="fa fa-question-circle-o" aria-hidden="true"></i> 
+                        </span>                 
+                        </a>
+                    </nav>
+                    <div class="tab-content">
+                        <div class="question-wrap" *ngFor="let question of questionArrayList;let i=index;">
+                            <p *ngIf ="question.curr_index==selectedQuestion.curr_index" > {{question.curr_question}}</p>
+                            <div *ngIf ="question.curr_index==selectedQuestion.curr_index" class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input [value]="true" [checked]="question.evaluation==true" type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" (change)="onAnswerSelected(true)">
+                                        <label class="custom-control-label" for="customRadioInline1">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input [value]="false" [checked]="question.evaluation ==false" type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" (change)="onAnswerSelected(false)">
+                                        <label class="custom-control-label" for="customRadioInline2"> No</label>
+                                    </div>
+                                </div>                                 
+                            </div> 
+                        </div>
+                        <div class="questionButonControlBtn">
+
+                        
+                        <button [disabled]="enableStartOver!=true" mat-raised-button class="btn btn-primary custRecmdBtn" (click)="onStartOverClicked()">Start Over</button>
+                        <button [disabled]="enablePrevious!=true" mat-raised-button class="btn btn-primary custRecmdBtn custRecmdBtn1" (click)="onPreviousQuestionClicked(selectedQuestion)">Previous</button>
+                        <button [disabled]="enableNext!=true" mat-raised-button class="btn btn-primary custRecmdBtn custRecmdBtn2" (click)="onNextQuestionClicked(selectedQuestion)">Next</button>                        
+                    </div>
+                    </div>
+
+                </div>
+
+
+                <!-- <div *ngIf="submitted" class="thanks_wrap">                    -->
+                    <!-- <div class="header-wrap ng-tns-c157-4">
+                        <h2 class="title ng-tns-c157-4">Resolution</h2>
+                    </div>                        -->
+                    <!-- <div class="submit">                               
+                        <div class="content">
+                            <div class="text-center">
+                                <h5>Recommended Resolution</h5>
+                                <p class="payoff"><b>{{recommendedResolution}}</b> </p>
+                                <button class="rcmntdResBtn">Start Over</button>
+                            </div>                              
+                            
+                        </div>
+                    </div>                    
+                </div> -->
+
+                <div class="recomCard effect2" *ngIf="submitted">
+                    <div class="middleConatiner">
+                        <div class="confirmIcon">
+                            <div class="iconCircle">
+                                <i class="fal fa-check"></i>
+                            </div>
+                        </div>
+                        <div class="confirmText">
+                            <h2>Recommended Resolution</h2>
+                        </div>
+                        <div class="statusValue">
+                            <h3>{{recommendedResolution}}</h3>
+                        </div>
+                        <div class="startAgainButton">
+                            <button title="Start Over" (click)="onStartOverClicked()" ><i class="fal fa-redo-alt"></i> Start Over</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="customTablewrap">
+                    <div class="customTableContainer">
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.A.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.A.dq==true}">{{selectedQuestion.score.A.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.B.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.B.dq==true}" >{{selectedQuestion.score.B.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.C.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.C.dq==true}">{{selectedQuestion.score.C.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.D.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.D.dq==true}">{{selectedQuestion.score.D.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.E.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.E.dq==true}">{{selectedQuestion.score.E.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.F.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.F.dq==true}">{{selectedQuestion.score.F.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customTableContainerCell">
+                            <div class="customTablecontainerRowhead">
+                                <h2>{{selectedQuestion.score.G.name}}</h2>
+                            </div>
+                            <div class="customTableContainerRowbottom">
+                                <div class="dynamicWeightdata">
+                                    <h4>Weight</h4>
+                                </div>
+                                <div class="dynamicWeightValue">
+                                    <h6 [ngClass]="{'weightRedBg' : selectedQuestion.score.G.dq==true}">{{selectedQuestion.score.G.weight}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                
+                <div class="predictionWeightBox">
+                    <div class="predictedHeader">
+                        <h3>Weighted Score</h3>
+                    </div>
+                    <div class="predictedContainerBox">
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.A.dq==true}" >
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.A.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.A.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.A.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.B.dq==true}" >
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.B.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.B.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.B.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.C.dq==true}">
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.C.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.C.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.C.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.D.dq==true}">
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.D.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.D.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.D.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.E.dq==true}">
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.E.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.E.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.E.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.F.dq==true}">
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.F.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.F.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.F.weight}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="predictWeightBox" [ngClass]="{'predictDisabled' : selectedQuestion.score.G.dq==true}">
+                            <div class="predictedValueHead">
+                                <h2>{{selectedQuestion.score.G.name}}</h2>
+                            </div>
+                            <div [ngClass]="{'weightRedBg' : selectedQuestion.score.G.dq==true}" class="predictedValueBoxWrap">
+                                <h4>{{selectedQuestion.score.G.weight}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+
+            </div>
+        </div>
+    </div>
+</div></div>
+</block-ui>

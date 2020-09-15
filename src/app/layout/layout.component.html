@@ -1,0 +1,17 @@
+
+<mat-sidenav-container>
+    <!-- <app-header class="fixed-topnav" fxHide.gt-xs></app-header> -->
+<app-header fxHide.xs class="fixed-topnav-dsktop"></app-header>
+    <mat-sidenav #appDrawer mode="side" opened="true">
+        <mat-nav-list>
+            <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+
+
+
+
+    <router-outlet></router-outlet>
+
+    <app-footer></app-footer>
+</mat-sidenav-container>

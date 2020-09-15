@@ -1,0 +1,146 @@
+.header {
+    // background: #056aa5;
+    // height: 50px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    .avtar-wrap {
+        i.fas.fa-user-circle {
+            font-size: 26px;
+            padding-top: 6px;
+        }
+    }
+    .mat-toolbar {
+        // background: #00a092 !important;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 0;
+        .myaccount {
+            display: flex;
+            align-items: center;
+            height: 64px;
+            margin-right: 25px;
+            cursor: pointer;
+            img {
+                // border: 2px solid #bdb5b5;
+                // border-radius: 50%;
+            }
+            i.fa-caret-down {
+                font-size: 22px;
+            }
+            span {
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                text-transform: capitalize;
+                @media (max-width: 767px) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.menu-wrap {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    button#menu {
+        background: #1670bc;
+        height: 100%;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        margin-right: 20px;
+    }
+    span.logo {
+        // font-size: 34px;
+        // color: #71b2d8;
+        // max-width: 120px;
+        display: flex;
+        @media (min-width: 768px) {
+            // width: 200px;
+        }
+    }
+}
+
+.speridianLogoWrapper {
+    width: 180px;
+}
+.speridianLogoWrapper img {
+    width: 100%;
+}
+span.logo.mr-4 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.headerTextWrap
+{
+    color: #003bd4;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+span.logo.mr-4 {
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+
+
+
+@media only screen 
+and ( min-width : 500px )
+and ( max-width : 880px )
+{
+    header.header {
+        height: 80px;
+    }
+    
+    mat-toolbar.mat-toolbar.tool-bar.mat-toolbar-single-row {
+        height: 100%;
+    }
+    .speridianLogoWrapper {
+        margin-top: 6px;
+    }
+    .avtar-wrap.mr-2 {
+        margin-top: 8px;
+    }
+    .menu-wrap {
+        align-items: flex-start;
+    }
+    
+    .mat-menu-trigger.myaccount {
+        height: 100% !important;
+        display: flex;
+        align-items: flex-start !important;
+    }
+    
+    span.logo.mr-4 {
+        align-items: flex-end;
+    }
+    
+    h3.headerTextWrap {
+        font-size: 18px !important;
+    }
+    
+    .speridianLogoWrapper {
+        width: 120px !important;
+    }
+}
+
+@media only screen 
+and ( min-width : 881px )
+and ( max-width : 1100px )
+{
+    .speridianLogoWrapper {
+        width: 120px !important;
+    }
+    h3.headerTextWrap {
+        font-size: 18px !important;
+    }
+}

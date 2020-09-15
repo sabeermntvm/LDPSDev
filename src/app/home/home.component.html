@@ -1,0 +1,257 @@
+<div class="progress_overlay" *ngIf="showProgressBar">
+    <div class="progress-bar-wrap">
+        <div class="stat-wrap">
+            <h2>{{fileprocessStatus}}</h2> <span>{{progressbarValue}}%</span>
+        </div>
+        <mat-progress-bar mode="determinate" value="{{progressbarValue}}"></mat-progress-bar>
+    </div>
+</div>
+
+<div class="progress_overlay update-overlay" *ngIf="showUploadNoteStacked">
+    <div class="progress-bar-wrap update-wrap">
+        <h2>Processing.</h2>
+        <div class="stat-wrap update-status m-0">
+            <div *ngFor="let progressItem of progressResultList ;let i = index" class="status-list">
+
+                <mat-icon *ngIf="progressItem.status=='completed'" class="mr-2 completed-icon" style="font-size: 18px;
+                line-height: 18px;
+                width: 18px;
+                height: 18px;">check_circle</mat-icon>
+                <img *ngIf="progressItem.status=='pending'" src="./assets/img/hourglass.gif" class="mr-1"
+                    style="max-width:20px;" alt="">
+                <span *ngIf="progressItem.status=='completed'">{{progressItem.text}}</span>
+                <span *ngIf="progressItem.status=='pending'">{{progressItem.text+ appendString  }}</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="progress_overlay update-overlay" *ngIf="showUploadNote">
+    <div class="progress-bar-wrap update-wrap">
+        <h2>Processing.</h2>
+        <div>
+            <div *ngFor="let progressItem of progressResultList ;let i = index" class="status-list">
+                <img *ngIf="progressItem.status=='pending'" src="./assets/img/hourglass.gif" class="mr-1"
+                    style="max-width:20px;" alt="">
+                <span *ngIf="progressItem.status=='pending'">{{progressItem.text+ appendString  }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-2">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper">
+                <ul class="breadcrumb">
+                    <li>Home
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </li>
+                    <li>Default Prediction Model </li>
+
+                </ul>
+
+                <mat-card class="mat-cards">
+
+                    <mat-card-content>
+                        <div class="row flxRevrs">
+                            <div class="col-lg-8 col-md-6 flxwdth">
+                                <div class="header-wrap">
+                                    <h2 class="title">{{tabTitle}}</h2>
+                                    <p>{{tabInstruction}}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mainTabContainer">
+                                <div class="tab-header custTabHeader">
+
+                                    <a class="tab-title customTabTitle" *ngFor="let menu of toggleMenu ;let i = index"
+                                        [class.active]=" selectedMenu === i" (click)="onSelectedMenu(i)"><b>{{i+1}}</b>
+                                        {{menu}}</a>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-6 identifier-wrap">
+                                <div class="ckeyIdentifier">
+                                    <h3>Upload Identifier #</h3>
+                                    <select (change)="oncKeyChanged($event.target.value)" class='form-control'
+                                        [value]="cKey">
+                                        <option *ngFor="let cKeyItem of cKeyList" [value]="cKeyItem">{{cKeyItem}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab" *ngIf="selectedMenu === 0">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="upload-file-wrap">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="upload"
+                                                        [ngClass]="{'border-active' : showselectedFile}">
+                                                        <div class="upload-btn-wrapper">
+                                                            <mat-icon *ngIf="!showselectedFile">cloud_upload</mat-icon>
+                                                            <span *ngIf="!showselectedFile"
+                                                                style="font-size: 18px;">Choose dataset file to
+                                                                upload</span>
+                                                            <span *ngIf="showselectedFile"
+                                                                class="badge badge-secondary filess"><i
+                                                                    class="fa fa-file-excel-o mr-2"
+                                                                    style="font-size:18px;color:green;"></i>{{selectedFileName}}
+                                                                <i class="fa fa-times-circle ml-1"
+                                                                    (click)="onResetFileSelection()"></i></span>
+                                                            <input type="file" #selectedFile
+                                                                (change)="onFileSelected($event)"
+                                                                *ngIf="!showselectedFile"
+                                                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                        </div>
+                                                    </div>
+                                                    <button [disabled]="showselectedFile !== true"
+                                                        (click)="onValidateFile()"
+                                                        style="display: block;margin: 4px auto 0;width: 100%;border-radius: 0;"
+                                                        class="btn validate-btn" mat-flat-button color="primary">Click
+                                                        here to validate
+                                                        <!-- <i class="fa fa-check-circle ml-2" ></i> --></button>
+                                                    <div class="verfied-message" [hidden]="!showValidateBtn">
+                                                        <h5>File Validated Successfully!!</h5>
+                                                        <mat-icon>verified_user</mat-icon>
+                                                        <button class="btn w-10" mat-flat-button
+                                                            (click)="uploadFileNew()"> Proceed </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h6>File Upload Instructions</h6>
+                                                    <ol class="instructions mb-3">
+
+                                                        <li>Upload Microsoft Excel Sheet(xlsx).</li>
+                                                        <li>Maximum File Size is <b>4MB.</b></li>
+                                                        <li>Please <a href="assets\Template\Template.xlsx">click
+                                                                here</a> to
+                                                            download the sample template.</li>
+                                                    </ol>
+                                                    <div class="results-file" *ngIf="showVlidationError">
+                                                        <ul class="result-list">
+                                                            <li *ngFor="let data of errorData">
+                                                                <mat-icon class="mr-1"> block </mat-icon>
+                                                                {{data.ValidationMsg}}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab" *ngIf="selectedMenu === 1">
+                                <div class="row">
+                                    <div class="col-lg-12" id="contentToConvert">
+                                        <div class="customdashboardWrapper">
+                                            <div class="topsectiondashboard">
+                                                <div class="dashboardHeader">
+                                                    <h3 class="graph-title">Portfolio Breakdown by Risk Category</h3>
+                                                </div>
+                                                <div class="dashboardButtons">
+                                                    <a class="customButton" (click)="onDownloadPDF()" target="_blank"
+                                                        title="Download as PDF">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>PDF
+                                                    </a>
+                                                    <a class="customButton" target="_blank" (click)="onDownloadExcel()"
+                                                        title="Download as Excel">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>Excel
+                                                    </a>                                                   
+                                                </div>
+                                            </div>
+
+                                            <div class="chartWrapper">
+                                                <div class="pieChartwrapper">
+                                                    <div id="piechart">
+                                                        <apx-chart [series]="pieChartOptions.series"
+                                                            [chart]="pieChartOptions.chart"
+                                                            [labels]="pieChartOptions.labels"
+                                                            [dataLabels]="pieChartOptions.dataLabels"
+                                                            [colors]="pieChartOptions.colors"></apx-chart>
+                                                    </div>
+                                                </div>
+                                                <div class="barGraphWrapper">
+                                                    <div id="chart">
+                                                        <apx-chart [series]="barChartOptions.series"
+                                                            [chart]="barChartOptions.chart"
+                                                            [dataLabels]="barChartOptions.dataLabels"
+                                                            [plotOptions]="barChartOptions.plotOptions"
+                                                            [xaxis]="barChartOptions.xaxis"
+                                                            [yaxis]="barChartOptions.yaxis"
+                                                            [subtitle]="barChartOptions.subtitle"
+                                                            [colors]="barChartOptions.colors"></apx-chart>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-lg-12" *ngIf="selectedMenu === 1" id="results">
+                                                <div class="cust-table">
+                                                    <div class="table-content">
+                                                        <div class="mat-elevation-z8 table-container ">
+                                                            <table class="table  mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th *ngFor="let column of displayedHeads">
+                                                                            <span> {{getColumnDisplyName(column)}}</span>
+                                                                        </th>
+                                                                        <th class="stickycol head">
+                                                                            <span>Action</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let loan of filtredData ">
+                                                                        <td style="position: relative;"
+                                                                            [ngClass]="{'text-right' : getColumnDataType(column)==='number'}"
+                                                                            [attr.data-title]="column"
+                                                                            *ngFor="let column of displayedHeads; let index=index">
+                                                                            <span class="click-area"
+                                                                                [ngStyle]="{'visibility':column==='loan_sequence_number' ? 'visible' : 'hidden'}"
+                                                                                (click)="onOpenLoanEdit(loan)" title="Click to Edit"></span>
+                                                                            <span
+                                                                                [ngClass]="{'hyperlink' : column==='loan_sequence_number'}">
+                                                                                {{ getColumnDataPipe(column) ==''? (loan[column])  
+                                                                                : (loan[column] | dynamicPipe:getColumnDataPipe(column): getColumnDataFormat(column)) }}</span>
+                    
+                                                                        </td>
+                                                                        <td class="stickycol">
+                                                                            <button class="btn btn-small" [disabled]="loan.risk_category==0"
+                                                                                title="Click here to start Resolution"
+                                                                                (click)="onStartResolution(loan)">
+                                                                                <span class="mr-2">Resolution</span>
+                                                                                <mat-icon class="circle">keyboard_arrow_right</mat-icon>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                    
+                                                            </table>
+                    
+                                                        </div>
+                                                    </div>
+                                                    <mat-paginator class="mb-3 pr-2 custmPagenation" #paginator [length]="recordCount"
+                                                        [pageSize]="10" [pageSizeOptions]="pageSizeOptions"
+                                                        (page)="pageEvent = getServerData($event)">
+                                                    </mat-paginator>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>                        
+                    </mat-card-content>
+                </mat-card>
+
+            </div>
+        </div>
+    </div>
+</div>

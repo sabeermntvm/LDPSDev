@@ -1,0 +1,26 @@
+:host {
+    display: block;
+    outline: none;
+    .mat-list-item.active {
+        // background-color: mat-color($app-primary, 50);
+    }
+    &:hover,
+    &:focus {
+        >.mat-list-item:not(.expanded) {
+            // background-color: mat-color($app-primary, 100) !important;
+        }
+    }
+}
+
+.mat-list-item {
+    &.active {
+        .routeIcon {
+            // color: #499cec !important;
+            color: #0767be !important
+        }
+    }
+    .routeIcon {
+        color: #f7f3f3 !important;
+        font-size: 20px;
+    }
+}

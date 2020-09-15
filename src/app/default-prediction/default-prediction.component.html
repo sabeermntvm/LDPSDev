@@ -1,0 +1,151 @@
+<div class="container-fluid mt-2">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper">
+                <ul class="breadcrumb">
+                    <li>Home
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </li>
+                    <li>Default Prediction Model </li>
+
+                </ul>     
+
+                <mat-card class="mat-cards">
+
+                    <mat-card-content>
+                        <!-- <div class="tab-content">                            -->
+                            <div class="tab">
+                                <div class="row">                                  
+
+                                        <div class="row">
+                                            <div class="col-lg-12" id="contentToConvert">                                                
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-8 mb-4">  
+                                                                         <h3 class="graph-title">Portfolio Breakdown by Risk Category</h3>     </div>
+                                                                    <div class="col-lg-4 text-right"> 
+                                                                        <mat-button-toggle-group #group="matButtonToggleGroup" value="bar" (click)="onChartSelection()" >
+                                                                        <mat-button-toggle value="bar"  mat-flat-button title="Show Bar chart" aria-label="Show Bar chart">
+                                                                            <mat-icon> bar_chart</mat-icon>
+                                                                        </mat-button-toggle>
+                                                                        <mat-button-toggle value="pie" mat-flat-button title="Show Pie chart" aria-label="Show Pie chart">
+                                                                            <mat-icon> pie_chart</mat-icon>
+                                                                        </mat-button-toggle>                                                                                                                       
+                                                                      </mat-button-toggle-group>
+                                                                    </div>
+                                                                    <div class="col-lg-12"> <div id="chart" *ngIf="group.value === 'bar'">
+                                                                        <apx-chart
+                                                                            [series]="barChartOptions.series"
+                                                                            [chart]="barChartOptions.chart"
+                                                                            [dataLabels]="barChartOptions.dataLabels"
+                                                                            [plotOptions]="barChartOptions.plotOptions"
+                                                                            [xaxis]="barChartOptions.xaxis"
+                                                                            [subtitle]= "barChartOptions.subtitle"
+                                                                            [selection]= "barChartOptions.selection"
+                                                                        ></apx-chart>
+                                                                      </div>
+                                                                      <div id="piechart"  *ngIf="group.value === 'pie'">
+                                                                        <apx-chart 
+                                                                            [series]="pieChartOptions.series"
+                                                                            [chart]="pieChartOptions.chart" 
+                                                                            [labels]="pieChartOptions.labels"
+                                                                            [dataLabels]="pieChartOptions.dataLabels"
+                                                                            [colors]="pieChartOptions.colors"                                                                            
+                                                                        ></apx-chart>        
+                                                                      </div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                       
+                                                        </div>
+                                                    
+                                                    
+                                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="table-content">
+                                                            <div class="mat-elevation-z8 table-container ">
+                                                                <table class="table  mb-0"> 
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th *ngFor="let column of displayedHeads">
+                                                                                <span> {{getColumnDisplyName(column)}}</span>
+                                                                            </th>  
+                                                                            <th class="stickycol head">
+                                                                                <span>Action</span>
+                                                                            </th>                                                  
+                                                                        </tr>                    
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let loan of filtredData ">
+                                                                            <td style="position: relative;" [ngClass]="{'text-right' : getColumnDataType(column)==='number'}" [attr.data-title]="column" *ngFor="let column of displayedHeads; let index=index"  >
+                                                                                <span class="click-area" [ngStyle]="{'visibility':column==='loan_sequence_number' ? 'visible' : 'hidden'}" (click)="onOpenLoanEdit(loan)" title="Click to Edit"></span>
+                                                                                <span [ngClass]="{'hyperlink' : column==='loan_sequence_number'}"> {{ getColumnDataPipe(column) ==''? (loan[column])  
+                                                                                    : (loan[column] | dynamicPipe:getColumnDataPipe(column): getColumnDataFormat(column)) }}</span>
+                                                                               
+                                                                            </td>
+                                                                            <td class="stickycol"> <button class="btn btn-small"
+                                                                                title="Pending- Coming Soon" (click)="onStartResolution()">
+                                                                                <span class="mr-2">Resolution</span>
+                                                                                <mat-icon class="circle">keyboard_arrow_right</mat-icon>                                                            
+                                                                            </button></td>  
+                                                                        </tr>
+                                                                    </tbody>
+                                            
+                                                                </table>
+                        
+                                                            </div>
+                                                        </div>
+                                                        <mat-paginator #predictionpaginator [length]="recordCount" [pageSize]="10"
+                                                            [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = getServerData($event)">
+                                                        </mat-paginator>
+                                                    </div>
+                                                
+                                                </div>  
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                            <div class="chart-wrap" style="text-align:center">
+                                                                <div class="download-wrap" id="downloadbtnwrap">        
+                                                                    <a class="btn btn-primary mr-2" mat-raised-button                                                                    
+                                                                        (click)="onDownloadPDF()"
+                                                                        target="_blank"
+                                                                        title="Download as PDF">                                                                    
+                                                                        <i class="fa fa-download mr-2" aria-hidden="true"></i> <span>PDF</span>                                                                   
+                                                                    </a>
+                                                                    <a class="btn btn-primary mr-2" mat-raised-button                                                                   
+                                                                        target="_blank"
+                                                                        (click)="onDownloadExcel()"
+                                                                        title="Download as Excel">                                                                   
+                                                                        <i class="fa fa-download mr-2" aria-hidden="true"></i><span>Excel</span>                                                                   
+                                                                    </a>                                                              
+                                                                </div>    
+                                                                <div>  <h3>Upload Identifier #</h3>
+                                                                    <select (change) ="oncKeyChanged($event.target.value)" class='form-control' [value]="cKey"  >
+                                                                    <option *ngFor="let cKeyItem of cKeyList" [value] ="cKeyItem">{{cKeyItem}}</option>                                                               
+                                                                    </select>                                                        
+                                                                    
+                                                                </div>                                                                                                        
+                                                            </div>        
+                                                        </div>   
+                                                    </div>                                               
+                                            </div>
+                                        </div> 
+                                    
+                                </div>
+
+                            <!-- </div> -->
+
+
+                        </div>
+                        <div class="row mt-4" *ngIf="showTable" id="results">
+                            
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                
+            </div>
+        </div>
+    </div>
+</div>

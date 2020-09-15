@@ -1,0 +1,50 @@
+@import '../../assets/styles/breakpoints';
+// .mat-sidenav {
+//     width: 240px;
+// }
+.mat-sidenav-container {
+    height: calc(100vh);
+    padding-top: 65px;
+}
+
+.sidenav-toolbar {
+    height: 64px;
+    // background-color: mat-color($app-primary);
+    display: flex;
+    flex-direction: row;
+    @media (max-width: 600px) {
+        height: 56px;
+    }
+}
+
+.mat-list-base {
+    // padding-top: 65px!important;
+    padding-top: 95px !important;
+}
+
+.mat-nav-list {
+    // padding-top: 0;
+}
+
+.fixed-topnav-dsktop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100% !important;
+}
+
+.mat-drawer-container,
+.mat-drawer {
+    // padding-top: 56px;
+}
+
+@include breakpoint-max(600px) {
+    .fixed-topnav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100% !important;
+    }
+}
